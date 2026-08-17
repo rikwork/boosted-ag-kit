@@ -34,7 +34,7 @@
       "requires": {
         "skills": {
           "clean-code": "^2.0.0",
-          "code-review-checklist": "^1.0.0",
+          "code-review-checklist": "^2.0.0",
           "simplify-code": "^1.0.0"
         }
       },
@@ -42,6 +42,29 @@
         "Read",
         "Grep",
         "Glob",
+        "Edit",
+        "Write"
+      ],
+      "version": "1.0.0"
+    },
+    "code-reviewer": {
+      "model": "inherit",
+      "path": "agent/code-reviewer.md",
+      "requires": {
+        "skills": {
+          "clean-code": "^2.0.0",
+          "code-review-graph": "^1.0.0",
+          "deep-code-review": "^2.0.0",
+          "nextjs-react-expert": "^1.0.0",
+          "python-patterns": "^1.0.0",
+          "verify-changes": "^1.0.0"
+        }
+      },
+      "tools": [
+        "Read",
+        "Grep",
+        "Glob",
+        "Bash",
         "Edit",
         "Write"
       ],
@@ -405,7 +428,7 @@
       "requires": {
         "skills": {
           "clean-code": "^2.0.0",
-          "code-review-checklist": "^1.0.0",
+          "code-review-checklist": "^2.0.0",
           "lint-and-validate": "^1.0.0",
           "tdd-workflow": "^1.0.0",
           "testing-patterns": "^1.0.0",
@@ -626,7 +649,7 @@
       ],
       "path": "skills/code-review-checklist/SKILL.md",
       "scripts": [],
-      "version": "1.0.0"
+      "version": "2.0.0"
     },
     "code-review-graph": {
       "allowedTools": [
@@ -676,6 +699,17 @@
         "skills/database-design/scripts/schema_validator.py"
       ],
       "version": "1.0.0"
+    },
+    "deep-code-review": {
+      "allowedTools": [
+        "Read",
+        "Grep",
+        "Glob",
+        "Bash"
+      ],
+      "path": "skills/deep-code-review/SKILL.md",
+      "scripts": [],
+      "version": "2.0.0"
     },
     "deployment-procedures": {
       "allowedTools": [
@@ -1276,6 +1310,25 @@
         ],
         "skills": [
           "memory-system"
+        ]
+      },
+      "version": "1.0.0"
+    },
+    "review": {
+      "artifactOutputs": [
+        "code-review-report"
+      ],
+      "path": "workflows/review.md",
+      "requires": {
+        "agents": [
+          "code-reviewer"
+        ],
+        "skills": [
+          "deep-code-review",
+          "clean-code",
+          "python-patterns",
+          "nextjs-react-expert",
+          "code-review-graph"
         ]
       },
       "version": "1.0.0"

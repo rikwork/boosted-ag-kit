@@ -8,9 +8,9 @@
 
 AG Kit is a modular Antigravity workspace system consisting of:
 
-- **20 Specialist Agents** — role-based AI personas and orchestration roles;
-- **47 Skills** — domain knowledge modules with progressive conditional loading;
-- **13 Workflows** — slash-command procedures;
+- **21 Specialist Agents** — role-based AI personas and orchestration roles;
+- **48 Skills** — domain knowledge modules with progressive conditional loading;
+- **14 Workflows** — slash-command procedures;
 - **6 Rules** — workspace routing, coding, design, safety, and quick-reference constraints;
 - **Antigravity runtime layer** — contract, native hook, MCP helper, plugin builder, Doctor, schemas, and tests.
 
@@ -51,9 +51,9 @@ Any managed change without registry regeneration fails validation and CI. Google
 ├── manifest.json             # Generated component registry
 ├── manifest.lock.json        # Generated integrity lock
 ├── DEPENDENCY_GRAPH.md       # Generated workflow → agent → skill graph
-├── agent/                    # 20 specialist role definitions
-├── skills/                   # 47 progressive skills
-├── workflows/                # 13 slash-command procedures
+├── agent/                    # 21 specialist role definitions
+├── skills/                   # 48 progressive skills
+├── workflows/                # 14 slash-command procedures
 ├── rules/                    # 6 workspace constraints
 ├── memory/                   # Persistent project context
 ├── hooks/                    # Antigravity Doctor, policy, MCP, plugin, schemas, tests
@@ -93,7 +93,7 @@ The Antigravity runtime files are included in the managed integrity lock beginni
 
 ---
 
-## 🤖 Agents (20)
+## 🤖 Agents (21)
 
 Specialist AI personas for different domains.
 
@@ -117,12 +117,13 @@ Specialist AI personas for different domains.
 | `product-manager`        | Requirements, user stories | plan-writing, brainstorming                              |
 | `product-owner`          | Strategy, backlog, MVP     | plan-writing, brainstorming                              |
 | `qa-automation-engineer` | E2E testing, CI pipelines  | webapp-testing, testing-patterns                         |
+| `code-reviewer`          | Code review, DRY audit     | deep-code-review, clean-code, python-patterns, nextjs-react-expert, code-review-graph, verify-changes |
 | `code-archaeologist`     | Legacy code, refactoring   | clean-code, code-review-checklist                        |
 | `explorer-agent`         | Codebase analysis          | -                                                        |
 
 ---
 
-## 🧩 Skills (47)
+## 🧩 Skills (48)
 
 Modular knowledge domains that agents can load on-demand based on task context. Each skill has a `when_to_use` frontmatter field for conditional/intelligent loading.
 
@@ -166,6 +167,7 @@ Modular knowledge domains that agents can load on-demand based on task context. 
 | `testing-patterns`      | Jest, Vitest, strategies |
 | `webapp-testing`        | E2E, Playwright          |
 | `tdd-workflow`          | Test-driven development  |
+| `deep-code-review`      | Multi-lens adversarial code review & DRY integrity |
 | `code-review-checklist` | Code review standards    |
 | `lint-and-validate`     | Linting, validation      |
 
@@ -240,7 +242,7 @@ Modular knowledge domains that agents can load on-demand based on task context. 
 
 ---
 
-## 🔄 Workflows (13)
+## 🔄 Workflows (14)
 
 Slash command procedures. Invoke with `/command`.
 
@@ -259,6 +261,7 @@ Slash command procedures. Invoke with `/command`.
 | `/status`        | Check project status                           |
 | `/test`          | Run tests                                      |
 | `/verify`        | **NEW** Prove code works by running it         |
+| `/review`        | Deep adversarial code review (5 lenses)        |
 
 ---
 
@@ -366,9 +369,9 @@ For command details and prerequisites, see [scripts/README.md](scripts/README.md
 
 | Metric              | Value                             |
 | ------------------- | --------------------------------- |
-| **Total Agents**    | 20 (1 major upgrade in 2026.5.13) |
-| **Total Skills**    | 47                                |
-| **Total Workflows** | 13 (+2 new in 2026.5.13)          |
+| **Total Agents**    | 21 (1 major upgrade in 2026.5.13) |
+| **Total Skills**    | 48                                |
+| **Total Workflows** | 14 (+2 new in 2026.5.13)          |
 | **Toolkit Utilities** | 7 user-facing + 2 internal modules |
 | **Antigravity Utilities** | 4 runtime utilities              |
 | **Total Skill Scripts** | 18                              |
@@ -386,6 +389,7 @@ For command details and prerequisites, see [scripts/README.md](scripts/README.md
 | Mobile   | `mobile-developer`    | mobile-design                         |
 | Database | `database-architect`  | database-design                       |
 | Security | `security-auditor`    | vulnerability-scanner                 |
+| Review   | `code-reviewer`       | deep-code-review, clean-code          |
 | Testing  | `test-engineer`       | testing-patterns, webapp-testing      |
 | Debug    | `debugger`            | systematic-debugging                  |
 | Plan     | `project-planner`     | brainstorming, plan-writing           |

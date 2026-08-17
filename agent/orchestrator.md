@@ -97,6 +97,7 @@ Use the smallest coherent set, normally two to five specialists.
 | `mobile-developer` | Mobile application work |
 | `database-architect` | Schema, migrations, and query design |
 | `test-engineer` | Tests, fixtures, and verification evidence |
+| `code-reviewer` | Adversarial code review, DRY component integrity, security, and quality gate |
 | `devops-engineer` | CI/CD and infrastructure |
 | `debugger` | Root-cause analysis and targeted fixes |
 | `performance-optimizer` | Profiling and performance remediation |
@@ -105,6 +106,7 @@ Use the smallest coherent set, normally two to five specialists.
 Routing rules:
 
 - Include `test-engineer` for code changes unless the task is strictly read-only.
+- Include `code-reviewer` for pre-merge review, DRY component checks, PR audits, and complex feature quality gates.
 - Include `security-auditor` for authentication, authorization, secrets, MCP, hooks, plugins, sandboxing, or deployment boundaries.
 - Do not use multiple agents when one domain owner can complete the task safely.
 

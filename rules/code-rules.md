@@ -19,6 +19,7 @@ description: Apply when writing, building, refactoring, or fixing code — proje
 | **MOBILE** (iOS, Android, RN, Flutter) | `mobile-developer`    | mobile-design                 |
 | **WEB** (Next.js, React web)           | `frontend-specialist` | frontend-design               |
 | **BACKEND** (API, server, DB)          | `backend-specialist`  | api-patterns, database-design |
+| **REVIEW / AUDIT** (PR, diff, DRY)     | `code-reviewer`       | deep-code-review, clean-code  |
 
 > 🔴 **Mobile + frontend-specialist = WRONG.** Mobile = mobile-developer ONLY.
 
@@ -45,12 +46,13 @@ description: Apply when writing, building, refactoring, or fixing code — proje
 
 ---
 
-## 🏁 Plan Mode (4-Phase)
+## 🏁 Plan Mode (5-Phase)
 
 1. ANALYSIS → Research, questions
 2. PLANNING → `{task-slug}.md`, task breakdown
 3. SOLUTIONING → Architecture, design (NO CODE!)
 4. IMPLEMENTATION → Code + tests
+5. REVIEW & VERIFY → Adversarial audit (`code-reviewer` / `deep-code-review` 5 lenses) + verification scripts
 
 ---
 

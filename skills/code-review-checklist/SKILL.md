@@ -1,127 +1,51 @@
 ---
 name: code-review-checklist
-description: Code review guidelines covering code quality, security, and best practices.
+description: Code review guidelines covering code quality, security, and best practices. Redirects to deep-code-review for production-grade multi-lens audits.
 when_to_use: "When reviewing code for quality, security, and best practices. When the user says 'review my code' or 'check this PR'."
 allowed-tools: Read, Glob, Grep
-version: 1.0.0
+version: 2.0.0
 ---
 
-# Code Review Checklist
+# Code Review Checklist (Quick Reference)
 
-## Quick Review Checklist
+> 🔴 **MANDATORY:** For full-depth production reviews, use the **`@[skills/deep-code-review]`** skill.
 
-### Correctness
-- [ ] Code does what it's supposed to do
-- [ ] Edge cases handled
-- [ ] Error handling in place
-- [ ] No obvious bugs
+---
 
-### Security
-- [ ] Input validated and sanitized
-- [ ] No SQL/NoSQL injection vulnerabilities
-- [ ] No XSS or CSRF vulnerabilities
-- [ ] No hardcoded secrets or sensitive credentials
-- [ ] **AI-Specific:** Protection against Prompt Injection (if applicable)
-- [ ] **AI-Specific:** Outputs are sanitized before being used in critical sinks
+## ⚡ Quick 5-Lens Triage
 
-### Performance
-- [ ] No N+1 queries
-- [ ] No unnecessary loops
-- [ ] Appropriate caching
-- [ ] Bundle size impact considered
+### 1. DRY & Component Integrity (Zero-Duplication)
+- [ ] No raw HTML elements (`<button>`, `<input>`) when design system components exist in `@/components/ui/`.
+- [ ] No inline `<svg>` — use standard icon library (Lucide).
+- [ ] No duplicate utility functions (date formatting, API wrappers) already present in `utils/` or `lib/`.
 
-### Code Quality
-- [ ] Clear naming
-- [ ] DRY - no duplicate code
-- [ ] SOLID principles followed
-- [ ] Appropriate abstraction level
+### 2. Security & Tenant Isolation
+- [ ] IDOR check: Every query by `id` includes `user_id` or `workspace_id`.
+- [ ] All inputs validated via Zod (TypeScript) or Pydantic v2 (Python).
+- [ ] No exposed secrets or internal sensitive fields in response schemas.
 
-### Testing
-- [ ] Unit tests for new code
-- [ ] Edge cases tested
-- [ ] Tests readable and maintainable
+### 3. Concurrency & Database ACID
+- [ ] Multi-table mutations wrapped in explicit transactions.
+- [ ] All queries have explicit `LIMIT` / pagination.
+- [ ] Client fetch calls include `AbortController`.
 
-### Documentation
-- [ ] Complex logic commented
-- [ ] Public APIs documented
-- [ ] README updated if needed
+### 4. Python / FastAPI / PEP 8
+- [ ] No blocking I/O (`requests`, `time.sleep`) inside `async def`.
+- [ ] SQLAlchemy 2.0: No lazy loads in async (use `selectinload`).
+- [ ] Google-style docstrings with `Args:`, `Returns:`, `Raises:`, `Side Effects:`.
+- [ ] PEP 8 and modern Python 3.10+ typing (`X | None`, `list[str]`).
 
-## AI & LLM Review Patterns
+### 5. Frontend & React Performance
+- [ ] No re-render loops or unstable object references in `useEffect` deps.
+- [ ] SSR safe: No direct `window`/`localStorage` in initial render.
+- [ ] Complete UI states: Loading skeleton, Error message, Empty state.
 
-### Logic & Hallucinations
-- [ ] **Chain of Thought:** Does the logic follow a verifiable path?
-- [ ] **Edge Cases:** Did the AI account for empty states, timeouts, and partial failures?
-- [ ] **External State:** Is the code making safe assumptions about file systems or networks?
+---
 
-### Prompt Engineering Review
-```markdown
-// ❌ Vague prompt in code
-const response = await ai.generate(userInput);
+## 🚦 Severity Grading
 
-// ✅ Structured & Safe prompt
-const response = await ai.generate({
-  system: "You are a specialized parser...",
-  input: sanitize(userInput),
-  schema: ResponseSchema
-});
-```
+- 🔴 **P0 (Blocker):** Security vulnerability, data loss, crash, duplicate component created. **Blocks merge.**
+- 🟡 **P1 (Major):** Performance issue, missing `Raises:` docs, race condition, missing empty state.
+- 🟢 **P2 (Polish):** Naming, formatting, minor PEP 8 adjustments.
 
-## Anti-Patterns to Flag
-
-```typescript
-// ❌ Magic numbers
-if (status === 3) { ... }
-
-// ✅ Named constants
-if (status === Status.ACTIVE) { ... }
-
-// ❌ Deep nesting
-if (a) { if (b) { if (c) { ... } } }
-
-// ✅ Early returns
-if (!a) return;
-if (!b) return;
-if (!c) return;
-// do work
-
-// ❌ Long functions (100+ lines)
-// ✅ Small, focused functions
-
-// ❌ any type
-const data: any = ...
-
-// ✅ Proper types
-const data: UserData = ...
-```
-
-## Review Comments Guide
-
-```
-// Blocking issues use 🔴
-🔴 Blocker: SQL injection vulnerability in query builder.
-
-// Important improvements use 🟡
-🟡 Warning: Consider pagination for this list query.
-
-// Suggestions use 💡
-💡 Suggestion: This could be simplified using Array.flatMap().
-
-// Questions use ❓
-❓ Question: What happens if the network drops during this request?
-```
-
-## Quick Reference Commands
-
-```bash
-# Git diff check
-git diff --staged
-
-# Lint check
-npm run lint
-
-# Type check
-npm run type-check
-
-# Run test suite
-npm test
-```
+> 📖 **Full Protocol & Diff Examples:** See [`../deep-code-review/SKILL.md`](../deep-code-review/SKILL.md).
