@@ -23,6 +23,7 @@ yarn-error.log*
 *.swp
 *.swo
 
-# Local logs & test artifacts
-.agents/reports/*.json
-!packages/
+# AG Kit
+.agents/
+.agent/
+.agents-backup*/

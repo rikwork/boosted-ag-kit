@@ -104,7 +104,7 @@ def parse_frontmatter(path: Path, findings: list[Finding]) -> dict[str, object] 
 
 def validate_json(root: Path, findings: list[Finding]) -> None:
     for path in root.rglob("*.json"):
-        if "__pycache__" in path.parts:
+        if any(part in {".git", ".agents", "node_modules", "__pycache__"} for part in path.parts):
             continue
         try:
             json.loads(path.read_text("utf-8"))
@@ -255,6 +255,8 @@ def validate_generated_docs(root: Path, findings: list[Finding]) -> None:
 def validate_markdown_links(root: Path, findings: list[Finding]) -> None:
     pattern = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
     for path in root.rglob("*.md"):
+        if any(part in {".git", ".agents", "node_modules", "__pycache__"} for part in path.parts):
+            continue
         text = path.read_text("utf-8", errors="replace")
         for match in pattern.finditer(text):
             raw = match.group(1).strip()
@@ -316,7 +318,7 @@ def validate_memory(root: Path, findings: list[Finding]) -> None:
 
 def validate_python(root: Path, findings: list[Finding]) -> None:
     for path in root.rglob("*.py"):
-        if "__pycache__" in path.parts:
+        if any(part in {".git", ".agents", "node_modules", "__pycache__"} for part in path.parts):
             continue
         try:
             ast.parse(path.read_text("utf-8"), filename=str(path))
