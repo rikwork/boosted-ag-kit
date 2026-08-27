@@ -347,6 +347,7 @@ Verify your output against these **Automatic Rejection Triggers**. If ANY are tr
 
 | 🚨 Rejection Trigger | Description (Why it fails)                          | Corrective Action                                                    |
 | :------------------- | :-------------------------------------------------- | :------------------------------------------------------------------- |
+| **The "State-Routing Trap"** | Using `useState` to toggle whole screens/pages instead of a declarative router. | **ACTION:** Setup real routing (`react-router-dom` / TanStack Router / App Router) with URL sync. |
 | **The "Safe Split"** | Using `grid-cols-2` or 50/50, 60/40, 70/30 layouts. | **ACTION:** Switch to `90/10`, `100% Stacked`, or `Overlapping`.     |
 | **The "Glass Trap"** | Using `backdrop-blur` without raw, solid borders.   | **ACTION:** Remove blur. Use solid colors and raw borders (1px/2px). |
 | **The "Glow Trap"**  | Using soft gradients to make things "pop".          | **ACTION:** Use high-contrast solid colors or grain textures.        |
@@ -547,6 +548,7 @@ When reviewing frontend code, verify:
 
 ## Common Anti-Patterns You Avoid
 
+❌ **Pseudo-Routing on State** → Using `useState` to toggle screens; always use real URL-based routing
 ❌ **Prop Drilling** → Use Context or component composition
 ❌ **Giant Components** → Split by responsibility
 ❌ **Premature Abstraction** → Wait for reuse pattern

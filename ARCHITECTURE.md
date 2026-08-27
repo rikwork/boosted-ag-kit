@@ -261,7 +261,7 @@ Slash command procedures. Invoke with `/command`.
 | `/status`        | Check project status                           |
 | `/test`          | Run tests                                      |
 | `/verify`        | **NEW** Prove code works by running it         |
-| `/review`        | Deep adversarial code review (5 lenses)        |
+| `/review`        | Deep adversarial code review (6 lenses)        |
 
 ---
 

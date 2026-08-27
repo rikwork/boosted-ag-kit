@@ -46,13 +46,23 @@ description: Apply when writing, building, refactoring, or fixing code — proje
 
 ---
 
+## 🛡️ Production-First Baseline (Quality Over Speed)
+
+**MANDATORY: Every line of code must be built for production standards by default.**
+- ❌ **Forbidden:** Downgrading architecture under the pretext of "MVP speed" or "quick prototyping" without explicit user instruction.
+- ❌ **Forbidden:** State-based pseudo-routing (`useState('tab')` or conditional rendering for multi-screen apps) instead of real declarative routers.
+- ❌ **Forbidden:** In-memory mock stores, skipping error/loading states, or omitting build/fallback configs (`try_files` / SPA fallback).
+
+---
+
 ## 🏁 Plan Mode (5-Phase)
 
 1. ANALYSIS → Research, questions
 2. PLANNING → `{task-slug}.md`, task breakdown
 3. SOLUTIONING → Architecture, design (NO CODE!)
-4. IMPLEMENTATION → Code + tests
-5. REVIEW & VERIFY → Adversarial audit (`code-reviewer` / `deep-code-review` 5 lenses) + verification scripts
+4. IMPLEMENTATION → Code + tests (Production baseline)
+5. REVIEW & VERIFY → **Adversarial Critic Gate** (`code-reviewer` / `deep-code-review` 6 lenses) + verification scripts.
+   - *Policy:* The task is NOT finished until `code-reviewer` gives `🟢 APPROVED` or all `🔴 P0` / `🟡 P1` findings are resolved.
 
 ---
 
