@@ -17,10 +17,11 @@ priority: CRITICAL
 
 | Principle | Rule |
 |-----------|------|
+| **Production First** | Default to production standards; no unauthorized "MVP shortcuts" (e.g. pseudo-routing, mock stores) |
 | **SRP** | Single Responsibility - each function/class does ONE thing |
 | **DRY** | Don't Repeat Yourself - extract duplicates, reuse |
-| **KISS** | Keep It Simple - simplest solution that works |
-| **YAGNI** | You Aren't Gonna Need It - don't build unused features |
+| **KISS** | Keep It Simple - simplest solution that works without breaking production architecture |
+| **YAGNI** | You Aren't Gonna Need It - don't build unused features (but do build required architecture) |
 | **Boy Scout** | Leave code cleaner than you found it |
 
 ---
@@ -83,6 +84,8 @@ priority: CRITICAL
 | Deep nesting | Guard clauses |
 | Magic numbers | Named constants |
 | God functions | Split by responsibility |
+| Pseudo-routing on state | Declarative router (React Router, Next.js, etc.) |
+| Unauthorized MVP hacks | Real production architecture & persistence |
 
 ---
 

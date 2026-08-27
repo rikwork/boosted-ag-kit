@@ -231,8 +231,6 @@ Don't test everything up front; do cover:
 
 Colocate (`useBooking.test.ts` next to `useBooking.ts`) or keep `tests/unit` + `tests/e2e` — pick one and stay consistent.
 
----
-
 ## 15. Accessibility floor
 
 - Use `<button>` for actions, not `<div onClick>`.
@@ -242,4 +240,35 @@ Colocate (`useBooking.test.ts` next to `useBooking.ts`) or keep `tests/unit` + `
 
 ---
 
-> **Remember:** one file = one responsibility · UI doesn't own logic · logic → hook/composable · API → service · validation → schema · types separate · Next is server-first · Vue is composable-first. Directory structure comes from the scaffolding skill, not from here.
+## 16. Routing & Navigation Mandate (Strict No Pseudo-Routing)
+
+**Multi-screen applications MUST use declarative, URL-based routing. Never use `useState` to toggle entire views or pages.**
+
+| Pattern | Rule | Rationale |
+|---|---|---|
+| **Multi-Screen App** | **MANDATORY:** React Router, TanStack Router, or Next.js App Router | Browser history (Back/Forward), deep linking, bookmarkability. |
+| **Page Switching via `useState`** | ⛔ **STRICTLY FORBIDDEN** (`P0 Blocker`) | Degrades UX, breaks navigation, creates untestable monolithic root components. |
+| **View Tabs & Filters** | Sync with `searchParams` / URL query | Allows users to share URLs and retain filter state on reload. |
+| **SPA Fallback / Server Config** | Include Vite/Nginx fallback (`try_files $uri $uri/ /index.html`) | Prevents 404s on page refresh in production. |
+
+```tsx
+// ❌ REJECTED (Pseudo-routing on state):
+function App() {
+  const [currentScreen, setCurrentScreen] = useState('home')
+  return <div>{currentScreen === 'home' ? <Home /> : <Settings />}</div>
+}
+
+// ✅ APPROVED (Declarative URL routing):
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/settings" element={<Settings />} />
+    </Routes>
+  )
+}
+```
+
+---
+
+> **Remember:** one file = one responsibility · UI doesn't own logic · logic → hook/composable · API → service · validation → schema · types separate · Next is server-first · Vue is composable-first · **multi-screen apps use real routing, never useState tabs**. Directory structure comes from the scaffolding skill, not from here.

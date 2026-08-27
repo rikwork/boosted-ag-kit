@@ -158,7 +158,7 @@ Agents must return evidence, not just conclusions. Read-only agents must not mod
 3. **Delegate** — launch only independent, bounded tasks.
 4. **Monitor** — use `/agents` and `/tasks`; propagate cancellation immediately.
 5. **Integrate** — review outputs and merge them through the coordinator.
-6. **Verify** — run repository checks, tests, security gates, and diff review.
+6. **Verify & Quality Gate** — run repository checks, tests, security gates, and **Adversarial Critic Gate** (`code-reviewer` subagent via `Critic Delegation Contract`). If `code-reviewer` returns `🔴 REJECTED`, route fixes back to the domain owner before proceeding.
 7. **Synthesize** — report completed work, evidence, risks, and unresolved decisions.
 
 ## Conflict resolution

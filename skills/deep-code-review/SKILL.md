@@ -27,19 +27,20 @@ Vague advice like *"Consider adding error handling"* is **STRICTLY FORBIDDEN**. 
 
 ---
 
-## 🔬 The 5 Specialized Review Lenses
+## 🔬 The 6 Specialized Review Lenses
 
-Scan the diff/code systematically through these 5 lenses:
+Scan the diff/code systematically through these 6 lenses:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                       5-LENS SYSTEMATIC CODE SCAN                           │
+│                       6-LENS SYSTEMATIC CODE SCAN                           │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 🔍 LENS 1: DRY & Component Integrity (Zero-Duplication Protocol)           │
 │ 🛡️ LENS 2: Security & Tenant Isolation (IDOR, OWASP, Boundary Parsing)      │
 │ ⚡ LENS 3: Concurrency, Reliability & Database ACID                         │
 │ 🐍 LENS 4: Python / FastAPI / PEP 8 / Google Docstrings                    │
 │ ⚛️ LENS 5: Frontend & React Architecture (Hydration, Re-renders, States)    │
+│ 🏛️ LENS 6: Architectural Integrity & Anti-Shortcut (No Toy/MVP Hacks)      │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -193,6 +194,48 @@ async def transfer_funds(
   1. **Loading state:** Skeleton / loader indicator.
   2. **Error state:** User-friendly message with retry action.
   3. **Empty state:** Meaningful empty illustration and call-to-action when data array is `[]`.
+
+---
+
+### 🏛️ LENS 6: Architectural Integrity & Anti-Shortcut (Production Baseline)
+
+**Goal:** Prevent "MVP degradation", toy hacks, pseudo-navigation, and architectural laziness disguised as "speed of prototyping".
+
+#### 6.1 Routing & Navigation Integrity (Hard Ban on Pseudo-Routing)
+* 🔴 **P0 (Blocker):** Using `useState('activeTab')` or conditional rendering to switch top-level pages/screens when the application has multiple distinct views.
+  * *Policy:* If the app has >1 screen/page, it **MUST** use a declarative router (`react-router-dom`, `@tanstack/react-router`, Next.js App Router, Vue Router).
+  * *Policy:* Navigation must support browser history (Back/Forward), bookmarkable URLs, and deep linking.
+* 🔴 **P0 (Blocker):** Omitting build/server fallback configurations (e.g. Vite SPA fallback, Nginx `try_files $uri $uri/ /index.html`) when implementing client-side routing.
+* 🟡 **P1 (Major):** Multi-view filters, sorting, tabs inside a page, or pagination not synchronized with URL query parameters (`searchParams`).
+
+#### 6.2 Unauthorized MVP Degradation
+* 🔴 **P0 (Blocker):** Downgrading architecture to in-memory mocks, fake timers, or skipping persistence/API layers under the pretext of "quick MVP", unless the user **EXPLICITLY** requested a throwaway prototype.
+* 🔴 **P0 (Blocker):** Single-file "god components" (>250 lines mixing state, API calls, types, styling, and navigation) written to avoid creating proper module structures.
+* 🟡 **P1 (Major):** Missing standard error boundaries or unhandled 404 / Not Found route handlers.
+
+---
+
+## 🤖 The Critic Delegation Contract (Subagent Verification)
+
+When an orchestrator or parent agent invokes `code-reviewer` as an adversarial critic subagent, the prompt **MUST** follow this structured contract:
+
+```text
+GOAL: Adversarial architectural review and verification gate
+USER_INTENT: [Original user request / requirement]
+DIFF_SUMMARY: [Summary of changes and changed file paths]
+CHANGED_FILES:
+[Full diff or list of edited files with line ranges]
+
+AUDIT_INSTRUCTION:
+Review the changes against the 6 Lenses of @[skills/deep-code-review].
+Specifically verify:
+1. Did the developer take shortcuts (e.g., useState pseudo-routing instead of real router)?
+2. Are all states (loading, error, empty) properly handled?
+3. Is DRY respected and were design system components reused?
+4. Is production-first baseline maintained (no unauthorized MVP hacks)?
+
+OUTPUT: Return standard Code Review Report with [🔴 REJECTED | 🟢 APPROVED] and drop-in fix diffs for any P0/P1.
+```
 
 ---
 

@@ -12,7 +12,7 @@ version: 2.0.0
 
 ---
 
-## ⚡ Quick 5-Lens Triage
+## ⚡ Quick 6-Lens Triage
 
 ### 1. DRY & Component Integrity (Zero-Duplication)
 - [ ] No raw HTML elements (`<button>`, `<input>`) when design system components exist in `@/components/ui/`.
@@ -40,11 +40,16 @@ version: 2.0.0
 - [ ] SSR safe: No direct `window`/`localStorage` in initial render.
 - [ ] Complete UI states: Loading skeleton, Error message, Empty state.
 
+### 6. Architectural Integrity & Anti-Shortcut
+- [ ] No pseudo-routing via `useState('tab')` for multi-screen apps (real declarative router required).
+- [ ] URLs synchronized with views, filters, and top-level tab states.
+- [ ] Production-first baseline: No unauthorized in-memory mock stores or missing SPA fallback configs.
+
 ---
 
 ## 🚦 Severity Grading
 
-- 🔴 **P0 (Blocker):** Security vulnerability, data loss, crash, duplicate component created. **Blocks merge.**
+- 🔴 **P0 (Blocker):** Security vulnerability, data loss, crash, duplicate component created, state-based pseudo-routing instead of real router, unauthorized MVP shortcuts. **Blocks merge.**
 - 🟡 **P1 (Major):** Performance issue, missing `Raises:` docs, race condition, missing empty state.
 - 🟢 **P2 (Polish):** Naming, formatting, minor PEP 8 adjustments.
 
